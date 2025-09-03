@@ -1,16 +1,24 @@
 name: 💅 Lint
 on: push
 
+defaults:
+  run:
+    working-directory: ./api   # si tu package.json está en ./api
+
 jobs: 
   lint:
     runs-on: macos-latest
-    name: ESLint
     steps:
       - name: 👍 Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20  # versión que usas localmente
+
       - name: 📥 Install Dependencies
         run: npm ci
 
-      - name: 🌹 ESLint
+      - name: 🌹 Run ESLint
         run: npm run lint
