@@ -1,40 +1,24 @@
 name: 💅 Lint
 on: push
 
-# Se asegura de que todos los comandos se ejecuten dentro de ./api
 defaults:
   run:
-    working-directory: ./api
-
-jobs: name: 💅 Lint
-on: push
-
-defaults:
-  run:
-    working-directory: ./api  # si tu package.json está en ./api
+    working-directory: ./api  # ajusta según dónde esté package.json
 
 jobs: 
   lint:
     runs-on: macos-latest
     steps:
-      # 1️⃣ Clonar el repositorio
       - name: 👍 Checkout
         uses: actions/checkout@v4
 
-      # 2️⃣ Configurar Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 3️⃣ Instalar dependencias
       - name: 📥 Install Dependencies
         run: npm ci
 
-      # 4️⃣ Arreglar automáticamente errores que ESLint pueda corregir
-      - name: 🌸 Fix ESLint issues
-        run: npm run lint:fix || true
-
-      # 5️⃣ Ejecutar ESLint y mostrar errores restantes, pero no falla
-      - name: 🌹 Run ESLint (show errors, no fail)
-        run: npm run lint || true
+      - name: 🌹 Run ESLint
+        run: npm run lint
