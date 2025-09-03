@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # Base de datos de producción
+  mongo:
+    image: mongo:6.0
+    container_name: api-mongo-1
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root123
+      MONGO_INITDB_DATABASE: demo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  # Base de datos para pruebas E2E
+  mongo-e2e:
+    image: mongo:6.0
+    container_name: api-mongo-e2e
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: test
+      MONGO_INITDB_ROOT_PASSWORD: test123
+      MONGO_INITDB_DATABASE: demo_e2e
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-e2e-data:/data/db
+
+volumes:
+  mongo-data:
+  mongo-e2e-data:
